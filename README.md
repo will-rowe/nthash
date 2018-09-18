@@ -45,11 +45,11 @@ var (
 
 func main() {
     hasher, err := ntHash.New(sequence, kmerSize)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for hash := range hasher.Hash() {
-		log.Println(hash)
+    if err != nil {
+        log.Fatal(err)
+    }
+    for hash := range hasher.Hash() {
+        log.Println(hash)
     }
 }
 ```
