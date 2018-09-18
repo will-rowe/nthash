@@ -1,11 +1,14 @@
-// package go-ntHash is a port of ntHash (https://github.com/bcgsc/ntHash) recursive hash function for DNA kmers
-// it was inspired by the Rust port by Luiz Irber (https://github.com/luizirber/nthash)
+// Package ntHash is a port of ntHash (https://github.com/bcgsc/ntHash) recursive hash function for DNA kmers.
+//
+// It was inspired by the Rust port by Luiz Irber (https://github.com/luizirber/nthash)
+//
 package ntHash
 
 import (
 	"fmt"
 )
 
+// MAXIMUM_K_SIZE is the maximum k-mer size permitted by the ntHash iterator
 const MAXIMUM_K_SIZE = uint(31)
 
 // hash takes a base (byte) and returns ....
@@ -90,9 +93,8 @@ func ntc64(seq []byte, i, k uint) uint64 {
 	rh := ntr64(seq, i, k)
 	if rh < fh {
 		return rh
-	} else {
-		return fh
 	}
+	return fh
 }
 
 // nthash returns the canonical ntHash for each k-mer in a sequence
@@ -118,7 +120,7 @@ type nthi struct {
 // New creates a new ntHash iterator
 func New(seq []byte, kSize int) (*nthi, error) {
 	seqLen := uint(len(seq))
-    k := uint(kSize)
+	k := uint(kSize)
 	if k > seqLen {
 		return nil, fmt.Errorf("k size is greater than sequence length (%d vs %d)!", k, seqLen)
 	}
@@ -160,9 +162,8 @@ func (nthi *nthi) Next() uint64 {
 	// return the canonical ntHash
 	if nthi.rh < nthi.fh {
 		return nthi.rh
-	} else {
-		return nthi.fh
 	}
+	return nthi.fh
 }
 
 // Hash method returns a channel to range over the canonical ntHash values of a sequence held by the ntHash iterator
