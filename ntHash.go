@@ -193,7 +193,6 @@ func (nthi *nthi) Hash() <-chan uint64 {
 func (nthi *nthi) getCanonical() uint64 {
 	if nthi.rh < nthi.fh {
 		return nthi.rh
-	} else {
-		return nthi.fh
 	}
+	return nthi.fh
 }

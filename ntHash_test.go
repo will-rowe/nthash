@@ -137,7 +137,7 @@ func BenchmarkHash(b *testing.B) {
 		if err != nil {
 			b.Fatal()
 		}
-		for _ = range nthi.Hash() {
+		for range nthi.Hash() {
 		}
 	}
 }
