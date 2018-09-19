@@ -44,10 +44,13 @@ var (
 )
 
 func main() {
-    hasher, err := ntHash.New(sequence, kmerSize)
+    // create the ntHash iterator using a pointer to the sequence and a k-mer size
+    hasher, err := ntHash.New(&sequence, kmerSize)
+    // check for errors (e.g. bad k-mer size choice)
     if err != nil {
         log.Fatal(err)
     }
+    // collect the hashes by ranging over the hash channel produced by the Hash method
     for hash := range hasher.Hash() {
         log.Println(hash)
     }

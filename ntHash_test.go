@@ -66,13 +66,13 @@ func TestNTHash(t *testing.T) {
 
 // test the ntHash iterator constructor
 func TestNewNTHI(t *testing.T) {
-	if _, err := New(kmer, 10); err == nil {
+	if _, err := New(&kmer, 10); err == nil {
 		t.Fatal("should trigger k > seq error")
 	}
-	if _, err := New(kmer, 200); err == nil {
+	if _, err := New(&kmer, 200); err == nil {
 		t.Fatal("should trigger k > max_k error")
 	}
-	nthi, err := New(sequence, 5)
+	nthi, err := New(&sequence, 5)
 	if err != nil {
 		t.Fatal()
 	}
@@ -81,7 +81,7 @@ func TestNewNTHI(t *testing.T) {
 
 // test the ntHash iterator next method
 func TestNext(t *testing.T) {
-	nthi, err := New(kmer2, 3)
+	nthi, err := New(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -102,7 +102,7 @@ func TestNext(t *testing.T) {
 
 // test the ntHash iterator hash method
 func TestHash(t *testing.T) {
-	nthi, err := New(kmer2, 3)
+	nthi, err := New(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -131,13 +131,13 @@ func TestHash(t *testing.T) {
 
 // run a benchmark of ntHash
 func BenchmarkHash(b *testing.B) {
-        // run the ntHash iterator b.N times
-        for n := 0; n < b.N; n++ {
-			nthi, err := New(sequence, 7)
-			if err != nil {
-				b.Fatal()
-			}
-			for _ = range nthi.Hash() {
-			}
-        }
+	// run the ntHash iterator b.N times
+	for n := 0; n < b.N; n++ {
+		nthi, err := New(&sequence, 7)
+		if err != nil {
+			b.Fatal()
+		}
+		for _ = range nthi.Hash() {
+		}
+	}
 }
