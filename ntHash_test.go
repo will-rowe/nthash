@@ -107,7 +107,8 @@ func TestHash(t *testing.T) {
 		t.Fatal()
 	}
 	counter := 0
-	for hash := range nthi.Hash() {
+	// use the canonical switch
+	for hash := range nthi.Hash(true) {
 		t.Log(hash)
 		counter++
 		switch counter {
@@ -137,7 +138,7 @@ func BenchmarkHash(b *testing.B) {
 		if err != nil {
 			b.Fatal()
 		}
-		for range nthi.Hash() {
+		for range nthi.Hash(true) {
 		}
 	}
 }

@@ -32,10 +32,10 @@ go get github.com/will-rowe/ntHash
 
 ``` go
 package main
-import (
-	"log"
 
-	"github.com/will-rowe/ntHash"
+import (
+    "log"
+    "github.com/will-rowe/ntHash"
 )
 
 var (
