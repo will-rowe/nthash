@@ -51,7 +51,8 @@ func main() {
         log.Fatal(err)
     }
     // collect the hashes by ranging over the hash channel produced by the Hash method
-    for hash := range hasher.Hash() {
+    canonical := true
+    for hash := range hasher.Hash(canonical) {
         log.Println(hash)
     }
 }

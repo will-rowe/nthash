@@ -128,6 +128,9 @@ func TestHash(t *testing.T) {
 			t.Fatal("unexpected output from nthi")
 		}
 	}
+	if counter != 3 {
+		t.Fatal("wrong iteration")
+	}
 }
 
 // run a benchmark of ntHash
