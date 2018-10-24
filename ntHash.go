@@ -169,26 +169,28 @@ func (nthi *nthi) Hash(canonical bool) <-chan uint64 {
 	hashChan := make(chan uint64)
 	go func() {
 		defer close(hashChan)
-		if nthi.currentIdx >= nthi.maxIdx {
-			return
-		}
-		if nthi.currentIdx != 0 {
-			prevBase := (*nthi.seq)[nthi.currentIdx-1]
-			endBase := (*nthi.seq)[nthi.currentIdx+nthi.k-1]
-			// alg 3. of ntHash paper
-			nthi.fh = roL(nthi.fh, 1)
-			nthi.fh ^= roL(hash(prevBase), nthi.k)
-			nthi.fh ^= hash(endBase)
-			nthi.rh = roR(nthi.rh, 1)
-			nthi.rh ^= roR(rcHash(prevBase), 1)
-			nthi.rh ^= roL(rcHash(endBase), nthi.k-1)
-		}
-		nthi.currentIdx++
-		// return the canonical ntHash
-		if canonical {
-			hashChan <- nthi.getCanonical()
-		} else {
-			hashChan <- nthi.fh
+		for {
+			if nthi.currentIdx >= nthi.maxIdx {
+				return
+			}
+			if nthi.currentIdx != 0 {
+				prevBase := (*nthi.seq)[nthi.currentIdx-1]
+				endBase := (*nthi.seq)[nthi.currentIdx+nthi.k-1]
+				// alg 3. of ntHash paper
+				nthi.fh = roL(nthi.fh, 1)
+				nthi.fh ^= roL(hash(prevBase), nthi.k)
+				nthi.fh ^= hash(endBase)
+				nthi.rh = roR(nthi.rh, 1)
+				nthi.rh ^= roR(rcHash(prevBase), 1)
+				nthi.rh ^= roL(rcHash(endBase), nthi.k-1)
+			}
+			nthi.currentIdx++
+			// return the canonical ntHash
+			if canonical {
+				hashChan <- nthi.getCanonical()
+			} else {
+				hashChan <- nthi.fh
+			}
 		}
 	}()
 	return hashChan
