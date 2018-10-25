@@ -133,8 +133,20 @@ func TestHash(t *testing.T) {
 	}
 }
 
-// run a benchmark of ntHash
+// run benchmarks of ntHash
 func BenchmarkHash(b *testing.B) {
+	// run the ntHash iterator b.N times
+	for n := 0; n < b.N; n++ {
+		nthi, err := New(&sequence, 7)
+		if err != nil {
+			b.Fatal()
+		}
+		for range nthi.Hash(false) {
+		}
+	}
+}
+
+func BenchmarkCanonicalHash(b *testing.B) {
 	// run the ntHash iterator b.N times
 	for n := 0; n < b.N; n++ {
 		nthi, err := New(&sequence, 7)
