@@ -122,9 +122,8 @@ type nthi struct {
 }
 
 // New creates a new ntHash iterator
-func New(seq *[]byte, kSize int) (*nthi, error) {
+func New(seq *[]byte, k uint) (*nthi, error) {
 	seqLen := uint(len(*seq))
-	k := uint(kSize)
 	if k > seqLen {
 		return nil, fmt.Errorf("k size is greater than sequence length (%d vs %d)!", k, seqLen)
 	}
