@@ -13,18 +13,18 @@ var (
 	kmer2    = []byte("ACTGC")
 )
 
-// test base hash
-func TestBaseHash(t *testing.T) {
-	if hash(kmer[0]) != 0x295549f54be24456 {
+// test seed lookup
+func TestSeedLookup(t *testing.T) {
+	if seedTab[kmer[0]] != 0x295549f54be24456 {
 		t.Fatal()
 	}
-	if hash(kmer[1]) != 0x20323ed082572324 {
+	if seedTab[kmer[1]] != 0x20323ed082572324 {
 		t.Fatal()
 	}
-	if hash(kmer[2]) != 0x3193c18562a02b4c {
+	if seedTab[kmer[2]] != 0x3193c18562a02b4c {
 		t.Fatal()
 	}
-	if hash(kmer[3]) != 0x3c8bfbb395c60474 {
+	if seedTab[kmer[3]] != 0x3c8bfbb395c60474 {
 		t.Fatal()
 	}
 }
