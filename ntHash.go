@@ -6,11 +6,12 @@ package ntHash
 
 import (
 	"fmt"
+	"math"
 )
 
 const (
 	// MAXIMUM_K_SIZE permitted by the ntHash iterator
-	MAXIMUM_K_SIZE = uint(31)
+	MAXIMUM_K_SIZE = math.MaxUint32
 	// BUFFERSIZE to use the Hash method channel
 	BUFFERSIZE = 128
 )
