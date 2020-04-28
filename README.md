@@ -3,12 +3,12 @@
   <h3><a href="ntHash">ntHash</a> implementation in Go</h3>
   <hr>
   <a href="https://travis-ci.org/will-rowe/ntHash"><img src="https://travis-ci.org/will-rowe/ntHash.svg?branch=master" alt="travis"></a>
-  <a href="https://godoc.org/github.com/will-rowe/ntHash"><img src="https://godoc.org/github.com/will-rowe/ntHash?status.svg" alt="GoDoc"></a>
+  <a href="https://godoc.org/github.com/will-rowe/nthash"><img src="https://godoc.org/github.com/will-rowe/nthash?status.svg" alt="GoDoc"></a>
   <a href="https://goreportcard.com/report/github.com/will-rowe/ntHash"><img src="https://goreportcard.com/badge/github.com/will-rowe/ntHash" alt="goreportcard"></a>
   <a href="https://codecov.io/gh/will-rowe/ntHash"><img src="https://codecov.io/gh/will-rowe/ntHash/branch/master/graph/badge.svg" alt="codecov"></a>
 </div>
 
-***
+---
 
 ## Overview
 
@@ -22,20 +22,20 @@ I have coded this up in Go so that ntHash can be used in my [HULK](https://githu
 
 ## Installation
 
-``` go
-go get github.com/will-rowe/ntHash
+```go
+go get github.com/will-rowe/nthash
 ```
 
 ## Example usage
 
 ### range over ntHash values for a sequence
 
-``` go
+```go
 package main
 
 import (
     "log"
-    "github.com/will-rowe/ntHash"
+    "github.com/will-rowe/nthash"
 )
 
 var (
@@ -44,12 +44,15 @@ var (
 )
 
 func main() {
+
     // create the ntHash iterator using a pointer to the sequence and a k-mer size
     hasher, err := ntHash.New(&sequence, kmerSize)
+
     // check for errors (e.g. bad k-mer size choice)
     if err != nil {
         log.Fatal(err)
     }
+
     // collect the hashes by ranging over the hash channel produced by the Hash method
     canonical := true
     for hash := range hasher.Hash(canonical) {

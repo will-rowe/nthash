@@ -1,3 +1,3 @@
-module github.com/will-rowe/ntHash
+module github.com/will-rowe/nthash
 
-go 1.12
+go 1.14
