@@ -133,6 +133,40 @@ func TestHash(t *testing.T) {
 	}
 }
 
+// test the ntHash iterator multihash method
+func TestMultiHash(t *testing.T) {
+	nthi, err := NewHasher(&kmer2, 3)
+	if err != nil {
+		t.Fatal()
+	}
+	counter := 0
+
+	// use the canonical switch and 3 multihashes
+	for hashes := range nthi.MultiHash(true, 3) {
+		t.Log(hashes)
+		counter++
+		switch counter {
+		case 1:
+			if hashes[0] != 0x9b1eda9a185413ce {
+				t.Fatal()
+			}
+		case 2:
+			if hashes[0] != 0x9f6acfa2235b86fc {
+				t.Fatal()
+			}
+		case 3:
+			if hashes[0] != 0xd4a29bf149877c5c {
+				t.Fatal()
+			}
+		default:
+			t.Fatal("unexpected output from nthi")
+		}
+	}
+	if counter != 3 {
+		t.Fatal("wrong iteration")
+	}
+}
+
 // run benchmarks of ntHash
 func BenchmarkHash(b *testing.B) {
 	// run the ntHash iterator b.N times
