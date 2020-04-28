@@ -1,6 +1,6 @@
 // test values have been lifted from Luiz Irber -- all credit and my thanks to him!
 // see https://github.com/luizirber/nthash/blob/master/src/lib.rs
-package ntHash
+package nthash
 
 import (
 	"fmt"
@@ -65,14 +65,14 @@ func TestNTHash(t *testing.T) {
 }
 
 // test the ntHash iterator constructor
-func TestNewNTHI(t *testing.T) {
-	if _, err := New(&kmer, 10); err == nil {
+func TestNewHasherNTHI(t *testing.T) {
+	if _, err := NewHasher(&kmer, 10); err == nil {
 		t.Fatal("should trigger k > seq error")
 	}
-	if _, err := New(&kmer, 200); err == nil {
+	if _, err := NewHasher(&kmer, 200); err == nil {
 		t.Fatal("should trigger k > max_k error")
 	}
-	nthi, err := New(&sequence, 5)
+	nthi, err := NewHasher(&sequence, 5)
 	if err != nil {
 		t.Fatal()
 	}
@@ -81,7 +81,7 @@ func TestNewNTHI(t *testing.T) {
 
 // test the ntHash iterator next method
 func TestNext(t *testing.T) {
-	nthi, err := New(&kmer2, 3)
+	nthi, err := NewHasher(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -102,7 +102,7 @@ func TestNext(t *testing.T) {
 
 // test the ntHash iterator hash method
 func TestHash(t *testing.T) {
-	nthi, err := New(&kmer2, 3)
+	nthi, err := NewHasher(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -137,7 +137,7 @@ func TestHash(t *testing.T) {
 func BenchmarkHash(b *testing.B) {
 	// run the ntHash iterator b.N times
 	for n := 0; n < b.N; n++ {
-		nthi, err := New(&sequence, 7)
+		nthi, err := NewHasher(&sequence, 7)
 		if err != nil {
 			b.Fatal()
 		}
@@ -149,7 +149,7 @@ func BenchmarkHash(b *testing.B) {
 func BenchmarkCanonicalHash(b *testing.B) {
 	// run the ntHash iterator b.N times
 	for n := 0; n < b.N; n++ {
-		nthi, err := New(&sequence, 7)
+		nthi, err := NewHasher(&sequence, 7)
 		if err != nil {
 			b.Fatal()
 		}
