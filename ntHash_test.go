@@ -1,6 +1,6 @@
 // test values have been lifted from Luiz Irber -- all credit and my thanks to him!
 // see https://github.com/luizirber/nthash/blob/master/src/lib.rs
-package ntHash
+package nthash
 
 import (
 	"fmt"
@@ -13,18 +13,18 @@ var (
 	kmer2    = []byte("ACTGC")
 )
 
-// test base hash
-func TestBaseHash(t *testing.T) {
-	if hash(kmer[0]) != 0x295549f54be24456 {
+// test seed lookup
+func TestSeedLookup(t *testing.T) {
+	if seedTab[kmer[0]] != 0x295549f54be24456 {
 		t.Fatal()
 	}
-	if hash(kmer[1]) != 0x20323ed082572324 {
+	if seedTab[kmer[1]] != 0x20323ed082572324 {
 		t.Fatal()
 	}
-	if hash(kmer[2]) != 0x3193c18562a02b4c {
+	if seedTab[kmer[2]] != 0x3193c18562a02b4c {
 		t.Fatal()
 	}
-	if hash(kmer[3]) != 0x3c8bfbb395c60474 {
+	if seedTab[kmer[3]] != 0x3c8bfbb395c60474 {
 		t.Fatal()
 	}
 }
@@ -65,14 +65,14 @@ func TestNTHash(t *testing.T) {
 }
 
 // test the ntHash iterator constructor
-func TestNewNTHI(t *testing.T) {
-	if _, err := New(&kmer, 10); err == nil {
+func TestNewHasherNTHI(t *testing.T) {
+	if _, err := NewHasher(&kmer, 10); err == nil {
 		t.Fatal("should trigger k > seq error")
 	}
-	if _, err := New(&kmer, 200); err == nil {
+	if _, err := NewHasher(&kmer, 200); err == nil {
 		t.Fatal("should trigger k > max_k error")
 	}
-	nthi, err := New(&sequence, 5)
+	nthi, err := NewHasher(&sequence, 5)
 	if err != nil {
 		t.Fatal()
 	}
@@ -81,7 +81,7 @@ func TestNewNTHI(t *testing.T) {
 
 // test the ntHash iterator next method
 func TestNext(t *testing.T) {
-	nthi, err := New(&kmer2, 3)
+	nthi, err := NewHasher(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -102,7 +102,7 @@ func TestNext(t *testing.T) {
 
 // test the ntHash iterator hash method
 func TestHash(t *testing.T) {
-	nthi, err := New(&kmer2, 3)
+	nthi, err := NewHasher(&kmer2, 3)
 	if err != nil {
 		t.Fatal()
 	}
@@ -133,11 +133,45 @@ func TestHash(t *testing.T) {
 	}
 }
 
+// test the ntHash iterator multihash method
+func TestMultiHash(t *testing.T) {
+	nthi, err := NewHasher(&kmer2, 3)
+	if err != nil {
+		t.Fatal()
+	}
+	counter := 0
+
+	// use the canonical switch and 3 multihashes
+	for hashes := range nthi.MultiHash(true, 3) {
+		t.Log(hashes)
+		counter++
+		switch counter {
+		case 1:
+			if hashes[0] != 0x9b1eda9a185413ce {
+				t.Fatal()
+			}
+		case 2:
+			if hashes[0] != 0x9f6acfa2235b86fc {
+				t.Fatal()
+			}
+		case 3:
+			if hashes[0] != 0xd4a29bf149877c5c {
+				t.Fatal()
+			}
+		default:
+			t.Fatal("unexpected output from nthi")
+		}
+	}
+	if counter != 3 {
+		t.Fatal("wrong iteration")
+	}
+}
+
 // run benchmarks of ntHash
 func BenchmarkHash(b *testing.B) {
 	// run the ntHash iterator b.N times
 	for n := 0; n < b.N; n++ {
-		nthi, err := New(&sequence, 7)
+		nthi, err := NewHasher(&sequence, 7)
 		if err != nil {
 			b.Fatal()
 		}
@@ -149,7 +183,7 @@ func BenchmarkHash(b *testing.B) {
 func BenchmarkCanonicalHash(b *testing.B) {
 	// run the ntHash iterator b.N times
 	for n := 0; n < b.N; n++ {
-		nthi, err := New(&sequence, 7)
+		nthi, err := NewHasher(&sequence, 7)
 		if err != nil {
 			b.Fatal()
 		}
