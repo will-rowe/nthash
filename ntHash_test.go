@@ -86,16 +86,17 @@ func TestNext(t *testing.T) {
 		t.Fatal()
 	}
 	// should return the pre-calculated ntHash for the first canonical k-mer
-	if nthi.Next() != 0x9b1eda9a185413ce {
+
+	if h, _ := nthi.Next(true); h != 0x9b1eda9a185413ce {
 		t.Fatal()
 	}
 	t.Log(nthi)
 	// should calculate the next canonical k-mer ntHash and return it
-	if nthi.Next() != 0x9f6acfa2235b86fc {
+	if h, _ := nthi.Next(true); h != 0x9f6acfa2235b86fc {
 		t.Fatal()
 	}
 	// should calculate the final canonical k-mer ntHash and return it
-	if nthi.Next() != 0xd4a29bf149877c5c {
+	if h, _ := nthi.Next(true); h != 0xd4a29bf149877c5c {
 		t.Fatal()
 	}
 }

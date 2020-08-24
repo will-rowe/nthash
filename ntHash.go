@@ -42,49 +42,49 @@ const (
 )
 
 // seedTab is the lookup table for the bases on their complements
-var	seedTab = [256]uint64{
-		seedN, seedT, seedN, seedG, seedA, seedA, seedN, seedC, // 0..7
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 8..15
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 16..23
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 24..31
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 32..39
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 40..47
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 48..55
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 56..63
-		seedN, seedA, seedN, seedC, seedN, seedN, seedN, seedG, // 64..71
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 72..79
-		seedN, seedN, seedN, seedN, seedT, seedT, seedN, seedN, // 80..87
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 88..95
-		seedN, seedA, seedN, seedC, seedN, seedN, seedN, seedG, // 96..103
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 104..111
-		seedN, seedN, seedN, seedN, seedT, seedT, seedN, seedN, // 112..119
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 120..127
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 128..135
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 136..143
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 144..151
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 152..159
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 160..167
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 168..175
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 176..183
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 184..191
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 192..199
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 200..207
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 208..215
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 216..223
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 224..231
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 232..239
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 240..247
-		seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN,  // 248..255
-	}
+var seedTab = [256]uint64{
+	seedN, seedT, seedN, seedG, seedA, seedA, seedN, seedC, // 0..7
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 8..15
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 16..23
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 24..31
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 32..39
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 40..47
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 48..55
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 56..63
+	seedN, seedA, seedN, seedC, seedN, seedN, seedN, seedG, // 64..71
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 72..79
+	seedN, seedN, seedN, seedN, seedT, seedT, seedN, seedN, // 80..87
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 88..95
+	seedN, seedA, seedN, seedC, seedN, seedN, seedN, seedG, // 96..103
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 104..111
+	seedN, seedN, seedN, seedN, seedT, seedT, seedN, seedN, // 112..119
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 120..127
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 128..135
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 136..143
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 144..151
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 152..159
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 160..167
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 168..175
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 176..183
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 184..191
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 192..199
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 200..207
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 208..215
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 216..223
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 224..231
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 232..239
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 240..247
+	seedN, seedN, seedN, seedN, seedN, seedN, seedN, seedN, // 248..255
+}
 
 // NTHi is the ntHash iterator
 type NTHi struct {
-	seq        *[]byte 	// the sequence being hashed
-	k          uint 	// the k-mer size
-	fh         uint64 	// the current forward hash value
-	rh         uint64 	// the current reverse hash value
-	currentIdx uint 	// the current index position in the sequence being hashed
-	maxIdx     uint 	// the maximum index position to hash up to
+	seq        *[]byte // the sequence being hashed
+	k          uint    // the k-mer size
+	fh         uint64  // the current forward hash value
+	rh         uint64  // the current reverse hash value
+	currentIdx uint    // the current index position in the sequence being hashed
+	maxIdx     uint    // the maximum index position to hash up to
 }
 
 // NewHasher is the constructor function for the ntHash iterator
@@ -111,12 +111,12 @@ func NewHasher(seq *[]byte, k uint) (*NTHi, error) {
 	return nthi, nil
 }
 
-// Next returns the next canonical ntHash value from an ntHash iterator
-func (nthi *NTHi) Next() uint64 {
+// Next returns the next ntHash value from an ntHash iterator
+func (nthi *NTHi) Next(canonical bool) (uint64, bool) {
 
 	// end the iterator if we have got to the maximum index position TODO: this needs to be done in a better way.
 	if nthi.currentIdx >= nthi.maxIdx {
-		return 0
+		return 0, false
 	}
 
 	// roll the hash if index>0
@@ -133,8 +133,10 @@ func (nthi *NTHi) Next() uint64 {
 	}
 	nthi.currentIdx++
 
-	// return the canonical ntHash
-	return nthi.getCanonical()
+	if canonical {
+		return nthi.getCanonical(), true
+	}
+	return nthi.fh, true
 }
 
 // Hash returns a channel to range over the canonical ntHash values of a sequence
@@ -216,11 +218,10 @@ func (nthi *NTHi) MultiHash(canonical bool, numMultiHash uint) <-chan []uint64 {
 				multiHashes[0] = nthi.fh
 			}
 
-			// get the multihashes
 			for i := uint64(1); i < uint64(numMultiHash); i++ {
-				tVal := multiHashes[0] * (i ^ uint64(nthi.k) * multiSeed)
+				tVal := multiHashes[0] * (i ^ uint64(nthi.k)*multiSeed)
 				tVal ^= tVal >> multiShift
-				multiHashes[i] =  tVal
+				multiHashes[i] = tVal
 			}
 
 			// send the multihashes for this k-mer
