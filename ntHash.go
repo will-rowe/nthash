@@ -7,6 +7,7 @@ package nthash
 import (
 	"fmt"
 	"math"
+	"sync"
 )
 
 const (
@@ -87,6 +88,11 @@ type NTHi struct {
 	maxIdx     uint    // the maximum index position to hash up to
 }
 
+// use object pool to reducing GC load for computation of huge number of sequences.
+var poolNTHi = &sync.Pool{New: func() interface{} {
+	return &NTHi{}
+}}
+
 // NewHasher is the constructor function for the ntHash iterator
 // seq is a pointer to the sequence being hashed
 // k is the k-mer size to use
@@ -100,14 +106,15 @@ func NewHasher(seq *[]byte, k uint) (*NTHi, error) {
 	}
 	fh := ntf64((*seq)[0:k], 0, k)
 	rh := ntr64((*seq)[0:k], 0, k)
-	nthi := &NTHi{
-		seq:        seq,
-		k:          k,
-		fh:         fh,
-		rh:         rh,
-		currentIdx: 0,
-		maxIdx:     (seqLen - (k - 1)),
-	}
+
+	nthi := poolNTHi.Get().(*NTHi)
+	nthi.seq = seq
+	nthi.k = k
+	nthi.fh = fh
+	nthi.rh = rh
+	nthi.currentIdx = 0
+	nthi.maxIdx = seqLen - (k - 1)
+
 	return nthi, nil
 }
 
@@ -116,6 +123,7 @@ func (nthi *NTHi) Next(canonical bool) (uint64, bool) {
 
 	// end the iterator if we have got to the maximum index position TODO: this needs to be done in a better way.
 	if nthi.currentIdx >= nthi.maxIdx {
+		poolNTHi.Put(nthi)
 		return 0, false
 	}
 
@@ -151,6 +159,7 @@ func (nthi *NTHi) Hash(canonical bool) <-chan uint64 {
 
 			// check that rolling can continue
 			if nthi.currentIdx >= nthi.maxIdx {
+				poolNTHi.Put(nthi)
 				return
 			}
 
@@ -194,6 +203,7 @@ func (nthi *NTHi) MultiHash(canonical bool, numMultiHash uint) <-chan []uint64 {
 
 			// check that rolling can continue
 			if nthi.currentIdx >= nthi.maxIdx {
+				poolNTHi.Put(nthi)
 				return
 			}
 
